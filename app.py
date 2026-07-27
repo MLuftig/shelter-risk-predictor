@@ -90,17 +90,23 @@ st.progress(min(int(risk_pct), 100))
 with st.expander("How this model works"):
     st.markdown(
         """
-        This is a **Random Forest classifier** trained on 4,916 historical Austin Animal Center
-        records. It predicts whether an animal will be returned to the shelter within 30 days
-        of adoption.
+        This is a **Random Forest classifier** trained on 54,408 historical Austin Animal
+        Center adoption records. It predicts whether an animal will be returned to the
+        shelter within 30 days of adoption.
 
         **Feature importance in this model:**
-        - Length of stay: **76.5%** — by far the strongest predictor
-        - Age at first visit: **19.0%**
-        - Species, breed group, and intake reason: remaining ~4.5% combined
+        - Age at first visit: **58.7%** — by far the strongest predictor
+        - Species: **20.7%**
+        - Length of stay, breed group, and intake reason: remaining ~20.6% combined
+
+        An earlier version of this model's target definition was flawed (it only measured
+        return *speed* among animals that had already returned, not whether a return
+        happened at all), which had produced a misleading result pointing to length of
+        stay as the dominant driver. The corrected model above reflects a properly rebuilt
+        binary classification target.
 
         The model was optimized for **recall over accuracy** — it prioritizes catching true
-        at-risk cases (61% recall) even at the cost of some false alarms, since missing a
+        at-risk cases (76% recall) even at the cost of some false alarms, since missing a
         genuine risk case is more costly than an unnecessary check-in call.
         """
     )
